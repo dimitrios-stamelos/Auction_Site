@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  username    String    @unique
+  password    String
+  email       String    @unique
+  firstName   String
+  lastName    String
+  phone       String?
+  address     String?
+  city        String?
+  country     String?
+  afm         String?   // ΑΦΜ
+  role        Role      @default(VISITOR)
+  approved    Boolean   @default(false)
+  rating      Int       @default(0)
+
+  auctions    Auction[] @relation("UserAuctions")
+  bids        Bid[]
+  sentMsgs    Message[] @relation("SentMessages")
+  recvMsgs    Message[] @relation("ReceivedMessages")
+
+  // Chats (as userA/userB sides)
+  convAs      Conversation[] @relation("ConversationUserA")
+  convBs      Conversation[] @relation("ConversationUserB")
+}
+
+model Auction {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String
+  category     String
+  startPrice   Float
+  buyPrice     Float?
+  currentPrice Float     @default(0)
+  startDate    DateTime
+  endDate      DateTime
+  location     String
+  latitude     Float?
+  longitude    Float?
+  images       String[]  // URLs των φωτογραφιών
+
+  sellerId Int
+  seller   User @relation("UserAuctions", fields: [sellerId], references: [id])
+
+  bids     Bid[]
+}
+
+model Bid {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  time      DateTime @default(now())
+
+  bidderId  Int
+  bidder    User @relation(fields: [bidderId], references: [id])
+
+  auctionId Int
+  auction   Auction @relation(fields: [auctionId], references: [id])
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  content    String
+  createdAt  DateTime @default(now())
+  read       Boolean  @default(false)
+
+  senderId   Int
+  sender     User @relation("SentMessages", fields: [senderId], references: [id])
+
+  receiverId Int
+  receiver   User @relation("ReceivedMessages", fields: [receiverId], references: [id])
+
+  // Optional chat thread this message belongs to (for chat UX)
+  conversationId Int?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+}
+
+enum Role {
+  VISITOR
+  BIDDER
+  SELLER
+  ADMIN
+}
+
+// Simple 1-1 chat between two users
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  userAId   Int
+  userBId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userA User @relation("ConversationUserA", fields: [userAId], references: [id])
+  userB User @relation("ConversationUserB", fields: [userBId], references: [id])
+
+  messages Message[]
+
+  /// Ensure unique pair regardless of order
+  @@unique([userAId, userBId])
+}

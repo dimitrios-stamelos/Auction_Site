@@ -1,0 +1,27 @@
+/* Minimal, app-friendly base styles (no forced centering/dark theme). */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f5f7fb; /* lets MUI components sit on a soft background */
+  color: inherit; /* let MUI control actual text colors */
+}
+
+/* Keep anchors neutral; MUI components provide their own styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}

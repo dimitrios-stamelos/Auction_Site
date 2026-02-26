@@ -1,0 +1,7 @@
+{
+  "name": "recommendations",
+  "private": true,
+  "scripts": {
+    "dev": "bash start.sh"
+  }
+}

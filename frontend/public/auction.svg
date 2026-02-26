@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2667ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="24" ry="24" fill="url(#g)"/>
+  <!-- gavel handle -->
+  <rect x="64" y="70" width="44" height="10" rx="5" transform="rotate(-30 64 70)" fill="#fff" opacity="0.9"/>
+  <!-- gavel head -->
+  <rect x="30" y="44" width="38" height="16" rx="4" transform="rotate(-30 30 44)" fill="#fff"/>
+  <rect x="22" y="46" width="12" height="12" rx="3" transform="rotate(-30 22 46)" fill="#fff"/>
+  <rect x="70" y="38" width="12" height="12" rx="3" transform="rotate(-30 70 38)" fill="#fff"/>
+  <!-- base block -->
+  <rect x="28" y="88" width="50" height="10" rx="5" fill="#ffffff" opacity="0.9"/>
+</svg>
+

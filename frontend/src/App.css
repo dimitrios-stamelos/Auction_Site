@@ -1,0 +1,10 @@
+/* Reset default Vite demo styles that clashed with MUI layout */
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
+}
+
+/* Keep file for potential app-level overrides; intentionally minimal. */
